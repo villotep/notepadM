@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.Senha;
 import modelo.Usuario;
 
 public class Cadastro {
@@ -31,7 +32,7 @@ public class Cadastro {
       String row;
       while ((row = csvReader.readLine()) != null) {
         String[] dados = row.split(",");
-        cadastro.add(new Usuario(dados[0], dados[1], dados[2]));
+        cadastro.add(new Usuario(dados[0], dados[1], new Senha(dados[2], dados[3])));
       }
       csvReader.close();
 
@@ -50,7 +51,8 @@ public class Cadastro {
       for (Usuario u : cadastrados) {
         csvWriter.append(u.getNome() + ",");
         csvWriter.append(u.getEmail() + ",");
-        csvWriter.append(u.getSenha() + "\n");
+        csvWriter.append(u.getSenha().getHash() + ",");
+        csvWriter.append(u.getSenha().getSalt() + "\n");        
       }
       csvWriter.close();
     } catch (IOException ex) {
@@ -62,7 +64,8 @@ public class Cadastro {
   public static void cadastrarNovo(String nome, String email, String senha) {
     if (cadastrados == null)
       cadastrados = carregarCadastro();
-    cadastrados.add(new Usuario(nome, email, senha));
+    String salt = PasswordUtil.generateSalt(512).get();
+    cadastrados.add(new Usuario(nome, email, new Senha(PasswordUtil.hashPassword(senha, salt).get(), salt)));
     salvarCadastro();
   }
 
