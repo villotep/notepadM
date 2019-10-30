@@ -1,7 +1,7 @@
 package modelo;
 
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
   private String nome;
   private String email;
   private Senha senha;
@@ -28,6 +28,20 @@ public class Usuario {
   }
   public void setSenha(Senha senha) {
     this.senha = senha;
+  }
+
+  @Override
+  public int compareTo(Usuario outro) {
+    if(this.email.equals(outro.email))
+      return 0;
+    return 1;
+  }
+  
+  @Override
+  public boolean equals(Object outro) {
+    if(this.email.equals(((Usuario)outro).email))
+      return true;
+    return false;
   }
 
 }

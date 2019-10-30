@@ -2,6 +2,9 @@ package modelo;
 
 public class Senha {
   
+  private String hash;
+  private String salt;
+  
   public String getHash() {
     return hash;
   }
@@ -20,7 +23,5 @@ public class Senha {
   public void setSalt(String salt) {
     this.salt = salt;
   }
-  private String hash;
-  private String salt;
 
 }

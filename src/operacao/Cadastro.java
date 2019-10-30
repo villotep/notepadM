@@ -62,11 +62,25 @@ public class Cadastro {
   }
 
   public static void cadastrarNovo(String nome, String email, String senha) {
-    if (cadastrados == null)
-      cadastrados = carregarCadastro();
     String salt = PasswordUtil.generateSalt(512).get();
     cadastrados.add(new Usuario(nome, email, new Senha(PasswordUtil.hashPassword(senha, salt).get(), salt)));
     salvarCadastro();
+  }
+  
+  public static void alterar(String nome, String email, String senha) {
+    Usuario existente = null;
+    for(Usuario u : cadastrados)
+      if(u.getEmail().equals(email))
+        existente = u;
+    cadastrados.remove(existente);
+    cadastrarNovo(nome, email, senha);
+  }
+
+  public static boolean existe(String email) {
+    for(Usuario u : cadastrados)
+      if(u.getEmail().equals(email))
+        return true;
+    return false;
   }
 
 }

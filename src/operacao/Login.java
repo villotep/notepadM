@@ -10,7 +10,8 @@ public class Login {
       String password) {
     for(Usuario u : Cadastro.getCadastrados()) {
       if(u.getEmail().equals(user)) {
-        if(u.getSenha().equals(password)) {
+        String salt = u.getSenha().getSalt();
+        if(PasswordUtil.verifyPassword(password, u.getSenha().getHash(), salt)) {
           logged = u;
           return true;
         } else {
