@@ -1,7 +1,10 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario implements Comparable<Usuario> {
+  private List<Nota> notas = new ArrayList<Nota>();
   private String nome;
   private String email;
   private Senha senha;
@@ -28,6 +31,18 @@ public class Usuario implements Comparable<Usuario> {
   }
   public void setSenha(Senha senha) {
     this.senha = senha;
+  }
+  
+  public void adicionaNota(Nota n) {
+    notas.add(n);
+  }
+  
+  public void removeNota(Nota n) {
+    notas.remove(n);
+  }
+  
+  public List<Nota> getNotas() {
+    return notas;
   }
 
   @Override
