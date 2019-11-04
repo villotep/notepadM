@@ -5,6 +5,10 @@ import modelo.Usuario;
 public class Login {
   
   private static Usuario logged;
+  
+  public static Usuario getLogado() {
+    return logged;
+  }
 
   public static boolean authenticate(String user, 
       String password) {
