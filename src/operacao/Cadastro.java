@@ -32,7 +32,8 @@ public class Cadastro {
       String row;
       while ((row = csvReader.readLine()) != null) {
         String[] dados = row.split(",");
-        cadastro.add(new Usuario(dados[0], dados[1], new Senha(dados[2], dados[3])));
+        cadastro.add(new Usuario(dados[0], dados[1], 
+            new Senha(dados[2], dados[3])));
       }
       csvReader.close();
 
