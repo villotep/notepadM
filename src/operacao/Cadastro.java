@@ -64,7 +64,8 @@ public class Cadastro {
 
   public static void cadastrarNovo(String nome, String email, String senha) {
     String salt = PasswordUtil.generateSalt(512).get();
-    cadastrados.add(new Usuario(nome, email, new Senha(PasswordUtil.hashPassword(senha, salt).get(), salt)));
+    cadastrados.add(new Usuario(nome, email, 
+        new Senha(PasswordUtil.hashPassword(senha, salt).get(), salt)));
     salvarCadastro();
   }
   

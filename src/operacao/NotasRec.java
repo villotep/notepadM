@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import modelo.Nota;
 import modelo.Usuario;
@@ -29,6 +31,15 @@ public class NotasRec {
         }
       }
     }
+  }
+
+  public static List<String> nomesNotas(Usuario usuario) {
+    List<Nota> notas = usuario.getNotas();
+    List<String> lNomes = new ArrayList<String>();
+    for(Nota n : notas) {
+      lNomes.add(n.getNome());
+    }
+    return lNomes;
   }
 
 }

@@ -9,7 +9,7 @@ public class Main {
     LoginDialog loginDlg = new LoginDialog(null);  
     loginDlg.setVisible(true);
     if (loginDlg.isSucceeded()) {
-      NotaDialog listaDlg = new NotaDialog(null);
+      ListaNotasDialog listaDlg = new ListaNotasDialog(null);
       listaDlg.setVisible(true);
     }
   }

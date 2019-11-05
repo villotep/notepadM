@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario implements Comparable<Usuario> {
+  
   private List<Nota> notas = new ArrayList<Nota>();
   private String nome;
   private String email;

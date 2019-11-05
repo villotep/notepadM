@@ -53,9 +53,8 @@ public class CadastroDialog extends JDialog {
     cs.gridx = 1;
     cs.gridy = 0;
     cs.gridwidth = 2;
-    panel.add(tfNome, cs);    
-    
-    
+    panel.add(tfNome, cs);
+
     lbEmail = new JLabel("Email: ");
     cs.gridx = 0;
     cs.gridy = 1;
@@ -96,52 +95,48 @@ public class CadastroDialog extends JDialog {
 
     btnCadastrar = new JButton("Cadastrar");
 
-    btnCadastrar.addActionListener(new ActionListener() 
-    
+    btnCadastrar.addActionListener(new ActionListener()
+
     {
       public void actionPerformed(ActionEvent e) {
         String pass = new String(tfPassword.getPassword());
         String conf = new String(tfPassConf.getPassword());
-        
-        if(pass.equals(conf)) { 
-          if(!Cadastro.existe(tfEmail.getText())) {
+
+        if (pass.equals(conf)) {
+          if (!Cadastro.existe(tfEmail.getText())) {
             Cadastro.cadastrarNovo(tfNome.getText(), tfEmail.getText(), pass);
-            JOptionPane.showMessageDialog(CadastroDialog.this, "Cadastro realizado com sucesso!",
-              "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(CadastroDialog.this, "Cadastro realizado com sucesso!", "Cadastro",
+                JOptionPane.INFORMATION_MESSAGE);
           } else {
-            Object[] options = {"Sim.",
-                "Não"};
-            int n = JOptionPane.showOptionDialog(CadastroDialog.this,
-                "Usuário existente. "
-                    + "Deseja alterar?",
-                    "Usuário existente",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[0]);
-            if(n == 0) {
+            Object[] options = { "Sim.", "Não" };
+            int n = JOptionPane.showOptionDialog(CadastroDialog.this, "Usuário existente. " + "Deseja alterar?",
+                "Usuário existente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+                options[0]);
+            if (n == 0) {
               Cadastro.alterar(tfNome.getText(), tfEmail.getText(), pass);
-              JOptionPane.showMessageDialog(CadastroDialog.this, "Alteração realizada com sucesso!",
-                "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+              JOptionPane.showMessageDialog(CadastroDialog.this, "Alteração realizada com sucesso!", "Cadastro",
+                  JOptionPane.INFORMATION_MESSAGE);
             }
           }
-        } else 
-          JOptionPane.showMessageDialog(CadastroDialog.this, "Senhas não conferem.",
-              "Cadastro", JOptionPane.ERROR_MESSAGE);
+        } else
+          JOptionPane.showMessageDialog(CadastroDialog.this, "Senhas não conferem.", "Cadastro",
+              JOptionPane.ERROR_MESSAGE);
         dispose();
       }
     });
     btnCancelar = new JButton("Cancelar");
     btnCancelar.addActionListener(new ActionListener() {
 
-  public void actionPerformed(ActionEvent e) {
-    dispose();
-  }});
+      public void actionPerformed(ActionEvent e) {
+        dispose();
+      }
+    });
 
-  JPanel bp = new JPanel();bp.add(btnCadastrar);bp.add(btnCancelar);
+    JPanel bp = new JPanel();
+    bp.add(btnCadastrar);
+    bp.add(btnCancelar);
 
-  getContentPane().add(panel, BorderLayout.CENTER);
+    getContentPane().add(panel, BorderLayout.CENTER);
     getContentPane().add(bp, BorderLayout.PAGE_END);
 
     pack();
