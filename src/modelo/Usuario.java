@@ -59,5 +59,8 @@ public class Usuario implements Comparable<Usuario> {
       return true;
     return false;
   }
+  public void limpaNotas() {
+    notas.clear();
+  }
 
 }
