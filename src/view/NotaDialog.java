@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -26,9 +24,10 @@ public class NotaDialog extends JDialog {
   JButton btnSair;
   private static String nomeNota;
 
-  public NotaDialog(Frame parent, String conteudo, String nome) {
+  public NotaDialog(Frame parent, ListaNotasDialog lnd, String conteudo, String nome) {
     super(parent, "Edição de Nota | " + nome, true);
     nomeNota = nome;
+    
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints cs = new GridBagConstraints();
 
@@ -47,21 +46,6 @@ public class NotaDialog extends JDialog {
     btnSalvar = new JButton("Salvar");
     btnSair = new JButton("Sair");
 
-    initListeners();
-
-    JPanel bp = new JPanel();
-    bp.add(btnSalvar);
-    bp.add(btnSair);
-
-    getContentPane().add(panel, BorderLayout.CENTER);
-    getContentPane().add(bp, BorderLayout.PAGE_END);
-
-    pack();
-    setResizable(false);
-    setLocationRelativeTo(parent);
-  }
-
-  public void initListeners() {
     btnSalvar.addActionListener(e -> {
       try {
         if (!nomeNota.equals("sem nome"))
@@ -80,6 +64,20 @@ public class NotaDialog extends JDialog {
 
     btnSair.addActionListener(e -> {
       dispose();
+      ListaNotasDialog listaDlg = new ListaNotasDialog(null);
+      listaDlg.setVisible(true);
     });
+
+    JPanel bp = new JPanel();
+    bp.add(btnSalvar);
+    bp.add(btnSair);
+
+    getContentPane().add(panel, BorderLayout.CENTER);
+    getContentPane().add(bp, BorderLayout.PAGE_END);
+
+    pack();
+    setResizable(false);
+    setLocationRelativeTo(parent);
   }
+
 }

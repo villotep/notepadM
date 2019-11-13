@@ -44,22 +44,8 @@ public class ListaNotasDialog extends JDialog {
     cs.gridwidth = 1;
     panel.add(lbNotas, cs);
 
-    try {
-      NotasOp.populaNotas(Login.getLogado());
-    } catch (IOException e) {
-      e.printStackTrace();
-      JOptionPane.showMessageDialog(ListaNotasDialog.this, "Erro ao recuperar notas do usuário.", "Notas",
-          JOptionPane.ERROR_MESSAGE);
-      dispose();
-    }
-
-    List<String> nomesNotas = NotasOp.nomesNotas(Login.getLogado());
-    String nomes[] = new String[nomesNotas.size()];
-    nomes = nomesNotas.toArray(nomes);
-    listaNotas = new JList<String>(nomes);
-
-    listaNotas.addMouseListener(new DoubleClickNota());
-
+    atualizaListaDeArquivos();
+    
     cs.gridx = 0;
     cs.gridy = 1;
     cs.gridwidth = 2;
@@ -85,7 +71,8 @@ public class ListaNotasDialog extends JDialog {
   public void initListeners() {
 
     btnNovaNota.addActionListener(e -> {
-      NotaDialog nd = new NotaDialog(null, "", "sem nome");
+      this.dispose();
+      NotaDialog nd = new NotaDialog(null, this, "", "sem nome");
       nd.setVisible(true);
     });
 
@@ -99,11 +86,30 @@ public class ListaNotasDialog extends JDialog {
     public void mouseClicked(MouseEvent evt) {
       JList<String> list = (JList<String>) evt.getSource();
       if (evt.getClickCount() == 2) {
-        NotaDialog nd = new NotaDialog(null, NotasOp.conteudoNota(Login.getLogado(), list.getSelectedValue()),
+        NotaDialog nd = new NotaDialog(null, ListaNotasDialog.this, NotasOp.conteudoNota(Login.getLogado(), list.getSelectedValue()),
             list.getSelectedValue());
         nd.setVisible(true);
+        ListaNotasDialog.this.dispose();
       }
     }
+  }
+
+  public void atualizaListaDeArquivos() {
+    try {
+      NotasOp.populaNotas(Login.getLogado());
+    } catch (IOException e) {
+      e.printStackTrace();
+      JOptionPane.showMessageDialog(ListaNotasDialog.this, "Erro ao recuperar notas do usuário.", "Notas",
+          JOptionPane.ERROR_MESSAGE);
+      dispose();
+    }
+
+    List<String> nomesNotas = NotasOp.nomesNotas(Login.getLogado());
+    String nomes[] = new String[nomesNotas.size()];
+    nomes = nomesNotas.toArray(nomes);
+    listaNotas = new JList<String>(nomes);
+
+    listaNotas.addMouseListener(new DoubleClickNota());
   };
 
 }
