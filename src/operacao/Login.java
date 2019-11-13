@@ -4,10 +4,10 @@ import modelo.Usuario;
 
 public class Login {
   
-  private static Usuario logged;
+  private static Usuario logado;
   
   public static Usuario getLogado() {
-    return logged;
+    return logado;
   }
 
   public static boolean authenticate(String user, 
@@ -16,7 +16,7 @@ public class Login {
       if(u.getEmail().equals(user)) {
         String salt = u.getSenha().getSalt();
         if(PasswordUtil.verifyPassword(password, u.getSenha().getHash(), salt)) {
-          logged = u;
+          logado = u;
           return true;
         } else {
           return false;

@@ -8,6 +8,7 @@ import javax.swing.border.*;
 import operacao.Login;
 
 public class LoginDialog extends JDialog {
+  private static final long serialVersionUID = 1L;
   private JTextField tfUsername;
   private JPasswordField pfPassword;
   private JLabel lbUsername;
@@ -52,53 +53,9 @@ public class LoginDialog extends JDialog {
     panel.setBorder(new LineBorder(Color.GRAY));
 
     btnLogin = new JButton("Login");
-
-    btnLogin.addActionListener(new ActionListener() {
-
-      public void actionPerformed(ActionEvent e) {
-        if (Login.authenticate(getUsername(), getPassword())) {
-          JOptionPane.showMessageDialog(LoginDialog.this, "Hi " + getUsername() + "! You have successfully logged in.",
-              "Login", JOptionPane.INFORMATION_MESSAGE);
-          succeeded = true;
-          dispose();
-        } else {
-          JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password", "Login",
-              JOptionPane.ERROR_MESSAGE);
-          // reset username and password
-          tfUsername.setText("");
-          pfPassword.setText("");
-          succeeded = false;
-          attempts++;
-          if(attempts >= 3) {
-            JOptionPane.showMessageDialog(LoginDialog.this, attempts + " incorrect attempts. (Waiting for " + attempts + "seconds.", "Login",
-                JOptionPane.ERROR_MESSAGE);
-            try {
-              Thread.sleep(attempts * 1000);
-            } catch (InterruptedException e1) {
-              // TODO Auto-generated catch block
-              e1.printStackTrace();
-            } 
-          } 
-        }
-      }
-    });
     btnCancel = new JButton("Cancel");
-    btnCancel.addActionListener(new ActionListener() {
-
-      public void actionPerformed(ActionEvent e) {
-        dispose();
-      }
-    });
-    
     btnCadastrar = new JButton("Cadastrar novo...");
-    btnCadastrar.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        CadastroDialog cadastroDlg = new CadastroDialog(parent);
-        cadastroDlg.setVisible(true); 
-      }
-    });
-    
-    
+
     JPanel bp = new JPanel();
     bp.add(btnLogin);
     bp.add(btnCancel);
@@ -110,6 +67,46 @@ public class LoginDialog extends JDialog {
     pack();
     setResizable(false);
     setLocationRelativeTo(parent);
+  }
+
+  public void initListeners() {
+    btnLogin.addActionListener(e -> {
+      if (Login.authenticate(getUsername(), getPassword())) {
+        JOptionPane.showMessageDialog(LoginDialog.this, "Hi " + getUsername() + "! You have successfully logged in.",
+            "Login", JOptionPane.INFORMATION_MESSAGE);
+        succeeded = true;
+        dispose();
+      } else {
+        JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password", "Login",
+            JOptionPane.ERROR_MESSAGE);
+        // reset username and password
+        tfUsername.setText("");
+        pfPassword.setText("");
+        succeeded = false;
+        attempts++;
+        if (attempts >= 3) {
+          JOptionPane.showMessageDialog(LoginDialog.this,
+              attempts + " incorrect attempts. (Waiting for " + attempts + "seconds.", "Login",
+              JOptionPane.ERROR_MESSAGE);
+          try {
+            Thread.sleep(attempts * 1000);
+          } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          }
+        }
+      }
+    });
+
+    btnCancel.addActionListener(e -> {
+      dispose();
+    });
+
+    btnCadastrar.addActionListener(e -> {
+      CadastroDialog cadastroDlg = new CadastroDialog(null);
+      cadastroDlg.setVisible(true);
+    });
+
   }
 
   public String getUsername() {

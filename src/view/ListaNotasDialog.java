@@ -48,7 +48,7 @@ public class ListaNotasDialog extends JDialog {
       NotasOp.populaNotas(Login.getLogado());
     } catch (IOException e) {
       e.printStackTrace();
-      JOptionPane.showMessageDialog(ListaNotasDialog.this, "Erro ao recuperar notas do usuário.", "Cadastro",
+      JOptionPane.showMessageDialog(ListaNotasDialog.this, "Erro ao recuperar notas do usuário.", "Notas",
           JOptionPane.ERROR_MESSAGE);
       dispose();
     }
@@ -66,29 +66,14 @@ public class ListaNotasDialog extends JDialog {
     panel.add(listaNotas, cs);
 
     btnNovaNota = new JButton("Nova nota");
-    
-    btnNovaNota.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        NotaDialog nd = new NotaDialog(null, "", "sem nome");
-        nd.setVisible(true);
-      }      
-    });
-    
-    
     btnSair = new JButton("Sair");
-    
-    btnSair.addActionListener(new ActionListener() {
 
-      public void actionPerformed(ActionEvent e) {
-        dispose();
-      }
-    
-    });
+    initListeners();
 
     JPanel bp = new JPanel();
     bp.add(btnNovaNota);
     bp.add(btnSair);
-    
+
     getContentPane().add(panel, BorderLayout.CENTER);
     getContentPane().add(bp, BorderLayout.PAGE_END);
 
@@ -96,14 +81,28 @@ public class ListaNotasDialog extends JDialog {
     setResizable(true);
     setLocationRelativeTo(parent);
   }
-  
+
+  public void initListeners() {
+
+    btnNovaNota.addActionListener(e -> {
+      NotaDialog nd = new NotaDialog(null, "", "sem nome");
+      nd.setVisible(true);
+    });
+
+    btnSair.addActionListener(e -> {
+      dispose();
+    });
+
+  }
+
   public class DoubleClickNota extends MouseAdapter {
     public void mouseClicked(MouseEvent evt) {
       JList<String> list = (JList<String>) evt.getSource();
       if (evt.getClickCount() == 2) {
-        NotaDialog nd = new NotaDialog(null, NotasOp.conteudoNota(Login.getLogado(), list.getSelectedValue()), list.getSelectedValue());
+        NotaDialog nd = new NotaDialog(null, NotasOp.conteudoNota(Login.getLogado(), list.getSelectedValue()),
+            list.getSelectedValue());
         nd.setVisible(true);
-      }      
+      }
     }
   };
 

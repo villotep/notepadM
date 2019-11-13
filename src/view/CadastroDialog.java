@@ -94,11 +94,25 @@ public class CadastroDialog extends JDialog {
     panel.setBorder(new LineBorder(Color.GRAY));
 
     btnCadastrar = new JButton("Cadastrar");
+    btnCancelar = new JButton("Cancelar");
 
-    btnCadastrar.addActionListener(new ActionListener()
+    initListeners();
+    
+    JPanel bp = new JPanel();
+    bp.add(btnCadastrar);
+    bp.add(btnCancelar);
 
-    {
-      public void actionPerformed(ActionEvent e) {
+    getContentPane().add(panel, BorderLayout.CENTER);
+    getContentPane().add(bp, BorderLayout.PAGE_END);
+
+    pack();
+    setResizable(false);
+    setLocationRelativeTo(parent);
+  }
+  
+  public void initListeners() {
+
+    btnCadastrar.addActionListener(e -> {
         String pass = new String(tfPassword.getPassword());
         String conf = new String(tfPassConf.getPassword());
 
@@ -122,25 +136,11 @@ public class CadastroDialog extends JDialog {
           JOptionPane.showMessageDialog(CadastroDialog.this, "Senhas não conferem.", "Cadastro",
               JOptionPane.ERROR_MESSAGE);
         dispose();
-      }
     });
-    btnCancelar = new JButton("Cancelar");
-    btnCancelar.addActionListener(new ActionListener() {
-
-      public void actionPerformed(ActionEvent e) {
+    
+    btnCancelar.addActionListener(e -> {
         dispose();
-      }
     });
-
-    JPanel bp = new JPanel();
-    bp.add(btnCadastrar);
-    bp.add(btnCancelar);
-
-    getContentPane().add(panel, BorderLayout.CENTER);
-    getContentPane().add(bp, BorderLayout.PAGE_END);
-
-    pack();
-    setResizable(false);
-    setLocationRelativeTo(parent);
+    
   }
 }
