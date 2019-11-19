@@ -88,8 +88,8 @@ public class ListaNotasDialog extends JDialog {
       if (evt.getClickCount() == 2) {
         NotaDialog nd = new NotaDialog(null, ListaNotasDialog.this, NotasOp.conteudoNota(Login.getLogado(), list.getSelectedValue()),
             list.getSelectedValue());
-        nd.setVisible(true);
         ListaNotasDialog.this.dispose();
+        nd.setVisible(true);
       }
     }
   }
